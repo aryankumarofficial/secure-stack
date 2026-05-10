@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import logger from "./middlewares/logger";
+import rootRouter from "./routes";
+import errorMiddleware from "./middlewares/error.middleware";
 const app = express();
 const port = Number(process.env.PORT);
 app.use(
@@ -14,10 +17,10 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(errorMiddleware);
 
 app.use(logger);
-
-
 
 app.get("/", (_, res) => {
   return res.json({
@@ -25,6 +28,8 @@ app.get("/", (_, res) => {
     message: "Server Running Successfully",
   });
 });
+
+app.use("/api", rootRouter);
 
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);
