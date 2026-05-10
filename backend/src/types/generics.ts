@@ -1,3 +1,5 @@
+import type { ROLE } from "../.generated/prisma";
+
 export type RequireAtLeastOne<
   T,
   Keys extends keyof T = keyof T,
@@ -7,5 +9,5 @@ export type RequireAtLeastOne<
 
 export type JwtPayload = {
   id: string;
-  email: string;
+  role: ROLE;
 };

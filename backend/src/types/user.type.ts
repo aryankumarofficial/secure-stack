@@ -6,3 +6,5 @@ export type UserCreateDTO = Pick<
   "name" | "email" | "password"
 >;
 export type UpdateUserDTO = Pick<Prisma.UserUpdateInput, "id" | "role">;
+
+export type UserLoginDTO = Pick<UserCreateDTO, "email" | "password">;

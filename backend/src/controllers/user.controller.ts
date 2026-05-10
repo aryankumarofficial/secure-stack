@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
-import { registerUser } from "../services/user.service";
+import { loginUser, registerUser } from "../services/user.service";
+import { setAuthCookies } from "../utils/cookies";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -10,6 +11,21 @@ export const registerController = asyncHandler(
       message:
         "Account created successfully. Please verify your email address to activate your account.",
       user,
+    });
+  },
+);
+
+export const loginController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { accessToken, refreshToken, user } = await loginUser(req.body);
+
+    setAuthCookies(res, accessToken, refreshToken);
+    return res.status(200).json({
+      success: true,
+      message: "Logged In Successfully",
+      user,
+      accessToken,
+      refreshToken,
     });
   },
 );
