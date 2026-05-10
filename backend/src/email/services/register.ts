@@ -12,9 +12,11 @@ export async function sendVerifyEmail({
   username,
   verificationUrl,
 }: SendVerifyEmailPayload) {
+  const subject = `Verify Your SecureStack Account`;
   const html = await render(VerifyEmail({ username, verificationUrl }));
   return transporter.sendMail({
     from: `SecureStack <${process.env.SMTP_USER}>`,
+    subject,
     to,
     html,
   });

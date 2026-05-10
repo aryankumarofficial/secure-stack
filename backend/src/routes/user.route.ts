@@ -5,6 +5,6 @@ import { userSchema } from "../validators/user.schema";
 
 const router = Router();
 
-router.post("/register", registerController, validate(userSchema));
+router.post("/register", validate(userSchema), registerController);
 
 export default router;

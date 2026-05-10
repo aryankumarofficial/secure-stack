@@ -4,13 +4,11 @@ import type { ROLE } from "../../.generated/prisma";
 import { generateToken, sessionExpiryMinutes } from "../../utils/token";
 import { hash } from "../../utils/hash";
 export const findUserByEmail = async (email: string): Promise<User | null> => {
-  const user = await prisma.user.findUnique({
+  return await prisma.user.findUnique({
     where: {
       email,
     },
   });
-  if (!user) throw new Error(`User with email ${email} not found`);
-  return user;
 };
 
 export const createUser = async (user: UserCreateDTO) => {

@@ -4,9 +4,11 @@ import AppError from "../utils/AppError";
 
 export function validate(schema: ZodObject) {
   return (req: Request, res: Response, next: NextFunction) => {
-    const result = schema.safeParse(schema);
+    const result = schema.safeParse(req.body);
     if (!result.success) {
-      new AppError(result.error.issues[0]?.message || `Invalid Input`, 400);
+      return next(
+        new AppError(result.error.issues[0]?.message || `Invalid Input`, 400),
+      );
     }
     req.body = result.data;
     next();

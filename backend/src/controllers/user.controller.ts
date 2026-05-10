@@ -7,7 +7,8 @@ export const registerController = asyncHandler(
     const user = await registerUser(req.body);
     return res.status(201).json({
       success: true,
-      message: `User Registered Successfully`,
+      message:
+        "Account created successfully. Please verify your email address to activate your account.",
       user,
     });
   },

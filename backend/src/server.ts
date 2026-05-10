@@ -18,7 +18,6 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(errorMiddleware);
 
 app.use(logger);
 
@@ -31,6 +30,7 @@ app.get("/", (_, res) => {
 
 app.use("/api", rootRouter);
 
+app.use(errorMiddleware);
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);
 });
