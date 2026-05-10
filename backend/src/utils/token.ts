@@ -1,0 +1,16 @@
+import crypto from "crypto";
+export function generateToken() {
+  return crypto.randomBytes(32).toString("base64");
+}
+
+export const sessionExpiry = (days: number = 7) => {
+  return new Date(Date.now() + 24 * 60 * 60 * 1_000 * days);
+};
+
+export const sessionExpiryMinutes = (minutes: number = 15) => {
+  return new Date(Date.now() + 60 * 1_000 * minutes);
+};
+
+export const sessionExpiryHours = (hours: number = 3) => {
+  return new Date(Date.now() + 60 * 60 * 1_000 * hours);
+};
