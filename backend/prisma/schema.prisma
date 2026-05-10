@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/.generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ROLE {
+  ADMIN
+  USER
+}
+
+enum TOKEN_TYPE {
+  EMAIL_VERIFICATION
+  RESET_PASSWORD
+}
+
+enum TASK_STATUS {
+  PENDING
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
+  CANCELED
+}
+
+enum TASK_PRIORITY {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  password String
+  role     ROLE   @default(USER)
+
+  tokens   Token[]
+  sessions Session[]
+  tasks    Task[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Token {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      TOKEN_TYPE @default(EMAIL_VERIFICATION)
+  token     String     @unique
+  expiredAt DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  Description String
+  status      TASK_STATUS   @default(PENDING)
+  priority    TASK_PRIORITY
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
