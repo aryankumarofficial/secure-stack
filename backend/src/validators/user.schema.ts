@@ -23,3 +23,7 @@ export const loginSchema = userSchema.pick({
 });
 
 export type Login = z.infer<typeof loginSchema>;
+
+export const logoutSchema = z.object({
+  userId: z.cuid2({ error: "Invalid ID" }),
+});

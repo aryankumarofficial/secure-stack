@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
-import { loginUser, registerUser } from "../services/user.service";
-import { setAuthCookies } from "../utils/cookies";
+import { loginUser, logoutUser, registerUser } from "../services/user.service";
+import { clearAuthCookies, setAuthCookies } from "../utils/cookies";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -26,6 +26,17 @@ export const loginController = asyncHandler(
       user,
       accessToken,
       refreshToken,
+    });
+  },
+);
+
+export const logoutController = asyncHandler(
+  async (req: Request, res: Response) => {
+    await logoutUser(req.body);
+    clearAuthCookies(res);
+    return res.status(200).json({
+      success: true,
+      message: `Logged out Successfully`,
     });
   },
 );

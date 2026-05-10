@@ -6,11 +6,9 @@ import { createUser, findUserByEmail } from "../db/repository/user.repo";
 import { sendVerifyEmail } from "../email/services/register";
 import type { UserCreateDTO, UserLoginDTO } from "../types/user.type";
 import AppError from "../utils/AppError";
-import { clearAuthCookies } from "../utils/cookies";
 import { hash, verify } from "../utils/hash";
 import { signToken } from "../utils/jwt";
 import { omit } from "../utils/object";
-import { generateToken, sessionExpiry } from "../utils/token";
 
 export async function registerUser(user: UserCreateDTO) {
   const existingUser = await findUserByEmail(user.email);
@@ -75,4 +73,8 @@ export async function loginUser(credentials: UserLoginDTO) {
     accessToken,
     refreshToken: session.token,
   };
+}
+
+export async function logoutUser(userId: string) {
+  await clearUserSession(userId);
 }
