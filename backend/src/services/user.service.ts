@@ -1,4 +1,5 @@
 import { createUser, findUserByEmail } from "../db/repository/user.repo";
+import { sendVerifyEmail } from "../email/services/register";
 import type { UserCreateDTO } from "../types/user.type";
 import AppError from "../utils/AppError";
 import { hash } from "../utils/hash";
@@ -15,7 +16,12 @@ export async function registerUser(user: UserCreateDTO) {
     ...user,
     password,
   });
-  //TODO: Send Verify email
+  const verificationUrl = `${process.env.PUBLIC_URL}/auth/verify?uid=${newUser.id}&token=${rowToken}`;
+  await sendVerifyEmail({
+    to: newUser.email,
+    username: newUser.name,
+    verificationUrl,
+  });
 
   return omit(newUser, "password");
 }
