@@ -86,3 +86,11 @@ export const getUserInfoById = (id: string) => {
     },
   });
 };
+
+export const getUsers = async () => {
+  return await prisma.user.findMany({
+    omit: {
+      password: true,
+    },
+  });
+};

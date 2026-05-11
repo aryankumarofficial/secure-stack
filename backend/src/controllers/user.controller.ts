@@ -9,6 +9,7 @@ import {
 } from "../services/user.service.js";
 import { clearAuthCookies, setAuthCookies } from "../utils/cookies.js";
 import { AuthenticatedRequest } from "../types/auth.js";
+import { verifyRefreshToken } from "../utils/jwt.js";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -39,7 +40,9 @@ export const loginController = asyncHandler(
 
 export const logoutController = asyncHandler(
   async (req: Request, res: Response) => {
-    await logoutUser(req.body);
+    const refreshToken = req.cookies.refreshToken;
+    const payload = verifyRefreshToken(refreshToken);
+    await logoutUser(payload.sessionId);
     clearAuthCookies(res);
     return res.status(200).json({
       success: true,
