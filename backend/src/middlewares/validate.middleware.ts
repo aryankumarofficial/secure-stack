@@ -7,7 +7,11 @@ export function validate(schema: ZodObject) {
     const result = schema.safeParse(req.body);
     if (!result.success) {
       return next(
-        new AppError(result.error.issues[0]?.message || `Invalid Input`, 400),
+        new AppError(
+          `${result.error.issues[0]?.path}: ${result.error.issues[0]?.message}` ||
+            `Invalid Input`,
+          400,
+        ),
       );
     }
     req.body = result.data;
