@@ -11,11 +11,12 @@ export function setAuthCookies(
     sameSite: "lax",
     maxAge: 1000 * 60 * 15,
   });
+
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24 * 10,
+    maxAge: 1000 * 60 * 60 * 24 * 30,
   });
 }
 
@@ -25,6 +26,7 @@ export function clearAuthCookies(res: Response) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
   });
+
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

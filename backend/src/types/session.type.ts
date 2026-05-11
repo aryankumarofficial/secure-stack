@@ -1,7 +1,11 @@
-export type { Session } from "../.generated/prisma/client";
-import { Prisma } from "../.generated/prisma/client";
+export type { Session } from "../.generated/prisma/client.js";
+import { Prisma } from "../.generated/prisma/client.js";
 
 export type SessionCreateDTO = Pick<
   Prisma.SessionUncheckedCreateInput,
-  "userId" | "token" | "expiredAt"
+  "userId" | "refreshToken" | "expiresAt"
+>;
+
+export type SessionUpdateDTO = Required<
+  Pick<Prisma.SessionUpdateInput, "refreshToken" | "expiresAt">
 >;

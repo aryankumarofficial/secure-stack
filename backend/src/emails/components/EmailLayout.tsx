@@ -1,6 +1,6 @@
 import { Html, Head, Body, Container, Preview } from "@react-email/components";
-import EmailHeader from "./EmailHeader";
-import EmailFooter from "./EmailFooter";
+import EmailHeader from "./EmailHeader.js";
+import EmailFooter from "./EmailFooter.js";
 
 interface EmailLayoutProps {
   children: React.ReactNode;

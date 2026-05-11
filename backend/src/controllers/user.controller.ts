@@ -1,7 +1,12 @@
 import type { Request, Response } from "express";
-import { asyncHandler } from "../utils/asyncHandler";
-import { loginUser, logoutUser, registerUser } from "../services/user.service";
-import { clearAuthCookies, setAuthCookies } from "../utils/cookies";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import {
+  loginUser,
+  logoutUser,
+  registerUser,
+  rotateRefreshToken,
+} from "../services/user.service.js";
+import { clearAuthCookies, setAuthCookies } from "../utils/cookies.js";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -17,13 +22,13 @@ export const registerController = asyncHandler(
 
 export const loginController = asyncHandler(
   async (req: Request, res: Response) => {
-    const { accessToken, refreshToken, user } = await loginUser(req.body);
+    const credentials = req.body;
+    const { accessToken, refreshToken } = await loginUser(credentials);
 
     setAuthCookies(res, accessToken, refreshToken);
     return res.status(200).json({
       success: true,
-      message: "Logged In Successfully",
-      user,
+      message: "Login Successful",
       accessToken,
       refreshToken,
     });
@@ -37,6 +42,19 @@ export const logoutController = asyncHandler(
     return res.status(200).json({
       success: true,
       message: `Logged out Successfully`,
+    });
+  },
+);
+
+export const refreshController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const refreshToken = req.cookies.refreshToken;
+    const tokens = await rotateRefreshToken(refreshToken);
+
+    setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+    return res.status(200).json({
+      success: true,
+      message: "Session refreshed successfully",
     });
   },
 );

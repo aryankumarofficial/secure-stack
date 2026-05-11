@@ -1,6 +1,6 @@
 import { render } from "@react-email/render";
-import VerifyEmail from "../../../emails/VerificationEmail";
-import { transporter } from "../transporter/config";
+import { transporter } from "../transporter/config.js";
+import VerifyEmail from "../../emails/VerificationEmail.js";
 
 interface SendVerifyEmailPayload {
   to: string;

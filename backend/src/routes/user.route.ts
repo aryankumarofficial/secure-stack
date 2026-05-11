@@ -2,19 +2,21 @@ import { Router } from "express";
 import {
   loginController,
   logoutController,
+  refreshController,
   registerController,
-} from "../controllers/user.controller";
-import { validate } from "../middlewares/validate.middleware";
+} from "../controllers/user.controller.js";
+import { validate } from "../middlewares/validate.middleware.js";
 import {
   loginSchema,
   logoutSchema,
   userSchema,
-} from "../validators/user.schema";
+} from "../validators/user.schema.js";
 
 const router = Router();
 
 router.post("/register", validate(userSchema), registerController);
 router.post("/login", validate(loginSchema), loginController);
+router.post("/refresh", refreshController);
 router.post("/logout", validate(logoutSchema), logoutController);
 
 export default router;

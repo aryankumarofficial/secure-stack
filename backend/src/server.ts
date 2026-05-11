@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import logger from "./middlewares/logger";
-import rootRouter from "./routes";
-import errorMiddleware from "./middlewares/error.middleware";
+import logger from "./middlewares/logger.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
+import rootRouter from "./routes/index.js";
 const app = express();
 const port = Number(process.env.PORT);
 app.use(

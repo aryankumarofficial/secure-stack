@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import argon2 from "argon2";
 export function hash(password: string) {
   return argon2.hash(password, {
@@ -10,4 +11,8 @@ export function hash(password: string) {
 
 export function verify(digest: string, password: string) {
   return argon2.verify(digest, password);
+}
+
+export function sha256(str: string) {
+  return crypto.createHash("sha256").update(str).digest("hex");
 }

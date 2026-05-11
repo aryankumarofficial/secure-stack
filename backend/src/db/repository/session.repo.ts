@@ -1,24 +1,48 @@
-import { prisma } from "../client";
-import type { SessionCreateDTO } from "../../types/session.type";
-import { generateToken, sessionExpiry } from "../../utils/token";
+import { prisma } from "../client.js";
+import type {
+  SessionCreateDTO,
+  SessionUpdateDTO,
+} from "../../types/session.type.js";
+import { generateToken, sessionExpiry } from "../../utils/token.js";
 
-export const createUserSession = async (userId: string) => {
+export const createUserSession = async (payload: SessionCreateDTO) => {
   return await prisma.session.create({
-    data: {
-      token: generateToken(),
-      expiredAt: sessionExpiry(3),
-      userId,
-    },
-    include: {
-      user: true,
+    data: payload,
+  });
+};
+
+export const findSessionById = async (id: string) => {
+  return await prisma.session.findUnique({
+    where: {
+      id,
     },
   });
 };
 
-export const clearUserSession = async (userId: string) => {
-  return await prisma.session.deleteMany({
+export async function updateSession(id: string, data: SessionUpdateDTO) {
+  return prisma.session.update({
+    where: {
+      id,
+    },
+    data: {
+      refreshToken: data.refreshToken,
+      expiresAt: data.expiresAt,
+    },
+  });
+}
+
+export async function deleteSession(id: string) {
+  return prisma.session.delete({
+    where: {
+      id,
+    },
+  });
+}
+
+export async function clearUserSession(userId: string) {
+  return prisma.session.deleteMany({
     where: {
       userId,
     },
   });
-};
+}

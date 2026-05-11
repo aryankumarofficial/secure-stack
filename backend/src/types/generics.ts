@@ -1,4 +1,4 @@
-import type { ROLE } from "../.generated/prisma";
+import type { ROLE } from "../.generated/prisma/client.js";
 
 export type RequireAtLeastOne<
   T,
@@ -8,6 +8,7 @@ export type RequireAtLeastOne<
   : never;
 
 export type JwtPayload = {
-  id: string;
+  userId: string;
   role: ROLE;
+  sessionId: string;
 };

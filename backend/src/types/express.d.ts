@@ -1,4 +1,4 @@
-import type { JwtPayload } from "./generics";
+import type { JwtPayload } from "./generics.js";
 import "express";
 
 declare global {

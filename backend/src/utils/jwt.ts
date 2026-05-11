@@ -1,15 +1,36 @@
 import jwt from "jsonwebtoken";
-import type { JwtPayload } from "../types/generics";
-const JWT_SECRET = process.env.JWT_SECRET!;
+import type { ROLE } from "../.generated/prisma/client.js";
 
-export function signToken(payload: JwtPayload) {
-  return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: "7d",
+interface AccessTokenPayload {
+  userId: string;
+  email: string;
+  role: ROLE;
+  sessionId: string;
+}
+
+interface RefreshTokenPayload {
+  sessionId: string;
+}
+
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET!;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET!;
+
+export function signAccessToken(payload: AccessTokenPayload) {
+  return jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+    expiresIn: "15m",
   });
 }
 
-export const verifyToken = (token: string) => {
-  const decoded = jwt.verify(token, JWT_SECRET);
-  if (typeof decoded === "string") throw new Error("Invalid token payload");
-  return decoded as JwtPayload;
-};
+export function verifyAccessToken(token: string) {
+  return jwt.verify(token, ACCESS_TOKEN_SECRET) as AccessTokenPayload;
+}
+
+export function signRefreshToken(payload: RefreshTokenPayload) {
+  return jwt.sign(payload, REFRESH_TOKEN_SECRET, {
+    expiresIn: "30d",
+  });
+}
+
+export function verifyRefreshToken(token: string) {
+  return jwt.verify(token, REFRESH_TOKEN_SECRET) as RefreshTokenPayload;
+}

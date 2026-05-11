@@ -1,21 +1,30 @@
 import type { NextFunction, Request, Response } from "express";
-import AppError from "../utils/AppError";
-import { verifyToken } from "../utils/jwt";
+import AppError from "../utils/AppError.js";
+import { verifyAccessToken } from "../utils/jwt.js";
+import { findSessionById } from "../db/repository/session.repo.js";
 
-export function authMiddleware(
+export async function authMiddleware(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ) {
-  const token = req.cookies?.accessToken;
-  const refresh = req.cookies?.refreshToken;
-  if (!token) {
+  const accessToken = req.cookies?.accessToken;
+  if (!accessToken) {
     throw new AppError("Unauthorized", 401);
   }
   try {
-    const payload = verifyToken(token);
+    const payload = verifyAccessToken(accessToken);
+    const session = await findSessionById(payload.sessionId);
+    if (!session) {
+      return next(new AppError("Session Expired", 401));
+    }
+
+    if (session.revokedAt) {
+      return next(new AppError("Session Revoked", 401));
+    }
+
     req.user = payload;
-    next();
+    return next();
   } catch {
     throw new AppError("Invalid or expired Token", 401);
   }
