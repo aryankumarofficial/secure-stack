@@ -1,4 +1,4 @@
-import type { ROLE } from "../.generated/prisma/client.js";
+import { ROLE } from "../../.generated/prisma/index.js";
 
 export type RequireAtLeastOne<
   T,

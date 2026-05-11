@@ -1,5 +1,5 @@
-export type { User } from "../.generated/prisma/client.js";
-import type { Prisma } from "../.generated/prisma/client.js";
+export type { User } from "../../.generated/prisma/client.js";
+import type { Prisma } from "../../.generated/prisma/client.js";
 
 export type UserCreateDTO = Pick<
   Prisma.UserCreateInput,

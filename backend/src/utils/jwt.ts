@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import type { ROLE } from "../.generated/prisma/client.js";
+import type { ROLE } from "../../.generated/prisma/client.js";
 
 interface AccessTokenPayload {
   userId: string;

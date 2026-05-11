@@ -2,7 +2,7 @@ import { prisma } from "../client.js";
 import type { User, UserCreateDTO } from "../../types/user.type.js";
 import { generateToken, sessionExpiryMinutes } from "../../utils/token.js";
 import { hash } from "../../utils/hash.js";
-import { ROLE } from "../../.generated/prisma/index.js";
+import { ROLE } from "../../../.generated/prisma/index.js";
 export const findUserByEmail = async (email: string): Promise<User | null> => {
   return await prisma.user.findUnique({
     where: {

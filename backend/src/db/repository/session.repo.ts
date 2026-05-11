@@ -3,7 +3,6 @@ import type {
   SessionCreateDTO,
   SessionUpdateDTO,
 } from "../../types/session.type.js";
-import { generateToken, sessionExpiry } from "../../utils/token.js";
 
 export const createUserSession = async (payload: SessionCreateDTO) => {
   return await prisma.session.create({
