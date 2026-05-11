@@ -1,5 +1,18 @@
-import { getUsers } from "../db/repository/user.repo.js";
+import { ROLE } from "../../.generated/prisma/index.js";
+import {
+  getUserInfoById,
+  getUsers,
+  updateUserRole,
+} from "../db/repository/user.repo.js";
+import AppError from "../utils/AppError.js";
 
 export async function fetchAllUsers() {
   return await getUsers();
+}
+
+export async function updateRole(userId: string, role: ROLE) {
+  const user = await getUserInfoById(userId);
+  if (!user) throw new AppError("User not found", 404);
+  const updatedUser = await updateUserRole(userId, role);
+  return updatedUser;
 }
