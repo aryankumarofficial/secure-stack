@@ -27,3 +27,14 @@ export const updateRoleController = asyncHandler(
     res.json(omit(updatedUser, "password"));
   },
 );
+
+export const updateUserBlockStatusController = asyncHandler(
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    const { userId } = req.params as Params;
+    const { isBlocked } = req.body;
+    if (req.user.userId === userId)
+      return next(new AppError("You cannot block yourself", 403));
+    const updatedUser = await updateRole(userId, isBlocked);
+    res.json(omit(updatedUser, "password"));
+  },
+);

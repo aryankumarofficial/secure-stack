@@ -3,6 +3,7 @@ import type { User, UserCreateDTO } from "../../types/user.type.js";
 import { generateToken, sessionExpiryMinutes } from "../../utils/token.js";
 import { hash } from "../../utils/hash.js";
 import { ROLE } from "../../../.generated/prisma/index.js";
+import { clearUserSession } from "./session.repo.js";
 export const findUserByEmail = async (email: string): Promise<User | null> => {
   return await prisma.user.findUnique({
     where: {
@@ -93,4 +94,21 @@ export const getUsers = async () => {
       password: true,
     },
   });
+};
+
+export const updateUserBlockStatus = async (id: string, isBlocked: boolean) => {
+  const user = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      isBlocked,
+    },
+  });
+
+  if (user.isBlocked) {
+    await clearUserSession(user.id);
+  }
+
+  return user;
 };
