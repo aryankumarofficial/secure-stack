@@ -5,6 +5,7 @@ import {
   updateUserBlockStatus,
   updateUserRole,
 } from "../db/repository/user.repo.js";
+import { getDashboardAnalytics } from "../db/repository/admin.repo.js";
 import AppError from "../utils/AppError.js";
 
 export async function fetchAllUsers() {
@@ -23,4 +24,8 @@ export async function toggleBlockUser(userId: string, isBlocked: boolean) {
   if (!user) throw new AppError("User not found", 404);
   const updatedUser = await updateUserBlockStatus(userId, isBlocked);
   return updatedUser;
+}
+
+export async function fetchDashboardAnalytics() {
+  return getDashboardAnalytics();
 }

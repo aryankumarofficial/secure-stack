@@ -1,5 +1,9 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { fetchAllUsers, updateRole } from "../services/admin.service.js";
+import {
+  fetchAllUsers,
+  fetchDashboardAnalytics,
+  updateRole,
+} from "../services/admin.service.js";
 import { AuthenticatedRequest } from "../types/auth.js";
 import { Response, NextFunction } from "express";
 import { ROLE } from "../../.generated/prisma/index.js";
@@ -36,5 +40,16 @@ export const updateUserBlockStatusController = asyncHandler(
       return next(new AppError("You cannot block yourself", 403));
     const updatedUser = await updateRole(userId, isBlocked);
     res.json(omit(updatedUser, "password"));
+  },
+);
+
+export const analyticsController = asyncHandler(
+  async (_req: AuthenticatedRequest, res: Response) => {
+    const analytics = await fetchDashboardAnalytics();
+
+    return res.status(200).json({
+      success: true,
+      analytics,
+    });
   },
 );

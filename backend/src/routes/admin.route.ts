@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  analyticsController,
   getAllUsersController,
   updateRoleController,
   updateUserBlockStatusController,
@@ -9,7 +10,6 @@ import {
   toogleBlockUserSchema,
   updateRoleSchema,
 } from "../validators/admin.schema.js";
-import { ro } from "zod/locales";
 
 const router = Router();
 
@@ -24,4 +24,6 @@ router.patch(
   validate(toogleBlockUserSchema),
   updateUserBlockStatusController,
 );
+
+router.get("/analytics", analyticsController);
 export default router;
