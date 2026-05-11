@@ -1,12 +1,14 @@
 import type { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {
+  fetchUser,
   loginUser,
   logoutUser,
   registerUser,
   rotateRefreshToken,
 } from "../services/user.service.js";
 import { clearAuthCookies, setAuthCookies } from "../utils/cookies.js";
+import { AuthenticatedRequest } from "../types/auth.js";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -55,6 +57,17 @@ export const refreshController = asyncHandler(
     return res.status(200).json({
       success: true,
       message: "Session refreshed successfully",
+    });
+  },
+);
+
+export const getUserInfoController = asyncHandler(
+  async (req: AuthenticatedRequest, res: Response) => {
+    const user = req.user;
+    const data = await fetchUser(user.userId);
+    return res.status(200).json({
+      success: true,
+      user: data,
     });
   },
 );

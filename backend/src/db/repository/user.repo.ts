@@ -75,3 +75,14 @@ export const updateUserPassword = (id: string, password: string) => {
     },
   });
 };
+
+export const getUserInfoById = (id: string) => {
+  return prisma.user.findFirst({
+    where: {
+      id,
+    },
+    omit: {
+      password: true,
+    },
+  });
+};

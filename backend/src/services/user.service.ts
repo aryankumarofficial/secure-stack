@@ -8,6 +8,7 @@ import {
   createUser,
   findUserByEmail,
   findUserById,
+  getUserInfoById,
 } from "../db/repository/user.repo.js";
 import { sendVerifyEmail } from "../mail/services/register.js";
 import type { UserCreateDTO, UserLoginDTO } from "../types/user.type.js";
@@ -170,4 +171,12 @@ export async function rotateRefreshToken(refreshToken: string) {
     refreshToken: newRefreshToken,
     user,
   };
+}
+
+export async function fetchUser(id: string) {
+  const user = await findUserById(id);
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+  return await getUserInfoById(id);
 }
