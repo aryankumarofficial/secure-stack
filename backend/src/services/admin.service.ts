@@ -29,3 +29,9 @@ export async function toggleBlockUser(userId: string, isBlocked: boolean) {
 export async function fetchDashboardAnalytics() {
   return getDashboardAnalytics();
 }
+
+export async function fetchUserDetails(userId: string) {
+  const user = await getUserInfoById(userId);
+  if (!user) throw new AppError("User not found", 404);
+  return user;
+}

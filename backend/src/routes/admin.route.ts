@@ -4,6 +4,7 @@ import {
   getAllUsersController,
   updateRoleController,
   updateUserBlockStatusController,
+  userDetailsController,
 } from "../controllers/admin.controller.js";
 import { validate } from "../middlewares/validate.middleware.js";
 import {
@@ -14,6 +15,7 @@ import {
 const router = Router();
 
 router.get("/users", getAllUsersController);
+router.get("/users/:userId", userDetailsController);
 router.patch(
   "/users/:userId/role",
   validate(updateRoleSchema),

@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import {
   fetchAllUsers,
   fetchDashboardAnalytics,
+  fetchUserDetails,
   updateRole,
 } from "../services/admin.service.js";
 import { AuthenticatedRequest } from "../types/auth.js";
@@ -51,5 +52,13 @@ export const analyticsController = asyncHandler(
       success: true,
       analytics,
     });
+  },
+);
+
+export const userDetailsController = asyncHandler(
+  async (req: AuthenticatedRequest, res: Response) => {
+    const { userId } = req.params as Params;
+    const user = await fetchUserDetails(userId);
+    res.json(user);
   },
 );
