@@ -38,4 +38,11 @@ export class TaskRepository {
     });
     return task;
   }
+
+  async deleteAll(userId: string): Promise<number> {
+    const result = await prisma.task.deleteMany({
+      where: { userId: userId },
+    });
+    return result.count;
+  }
 }

@@ -1,4 +1,5 @@
 import { TaskRepository } from "../db/repository/task.repo.js";
+import { findUserById } from "../db/repository/user.repo.js";
 import { UpdateTaskDTO, Task, CreateTaskDTO } from "../types/task.type.js";
 import AppError from "../utils/AppError.js";
 
@@ -36,5 +37,12 @@ export class TaskService {
     if (!task) throw new AppError("Task not found", 404);
 
     return task;
+  }
+
+  async deleteAll(userId: string): Promise<number> {
+    const user = await findUserById(userId);
+    if (!user) throw new AppError("User not found", 404);
+    const count = await this.taskRepository.deleteAll(userId);
+    return count;
   }
 }
