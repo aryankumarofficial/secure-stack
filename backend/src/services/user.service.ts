@@ -1,6 +1,7 @@
 import {
   clearUserSession,
   createUserSession,
+  deleteSession,
   findSessionById,
   updateSession,
 } from "../db/repository/session.repo.js";
@@ -71,8 +72,8 @@ export async function loginUser(credentials: UserLoginDTO) {
   };
 }
 
-export async function logoutUser(userId: string) {
-  await clearUserSession(userId);
+export async function logoutUser(sessionId: string) {
+  await deleteSession(sessionId);
 }
 
 export async function createLoginSession(userId: string) {
