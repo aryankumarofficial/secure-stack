@@ -8,6 +8,10 @@ COPY package.json bun.lock ./
 COPY prisma.config.ts ./
 COPY prisma ./prisma
 
+ARG DATABASE_URL="postgresql://build:build@localhost:5432/build"
+ENV DATABASE_URL=$DATABASE_URL
+
+
 RUN bun install --frozen-lockfile
 
 FROM deps AS builder
