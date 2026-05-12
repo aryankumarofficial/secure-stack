@@ -20,7 +20,7 @@ const options: swaggerJSDoc.Options = {
     },
     servers: [
       {
-        url: "{protocol}://localhost:{port}",
+        url: "{protocol}://localhost:{port}/api",
         description: "Local development server",
         variables: {
           protocol: {
@@ -34,7 +34,7 @@ const options: swaggerJSDoc.Options = {
         },
       },
       {
-        url: "https://secure-stack-backend.aryankumarofficial.dev",
+        url: "https://secure-stack-backend.aryankumarofficial.dev/api",
         description: "Production server",
       },
     ],
