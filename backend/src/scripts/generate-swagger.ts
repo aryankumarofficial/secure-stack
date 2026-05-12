@@ -4,4 +4,4 @@ import { options } from "../config/swagger";
 
 const swaggerSpec = swaggerJSDoc(options);
 
-fs.writeFileSync("./swagger.json", JSON.stringify(swaggerSpec, null, 2));
+fs.writeFileSync("./dist/swagger.json", JSON.stringify(swaggerSpec, null, 2));
