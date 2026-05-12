@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import logger from "./middlewares/logger.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import rootRouter from "./routes/index.js";
-import swaggerDocument from "../swagger.json";
+import swaggerDocument from "./swagger.json";
 const app = express();
 const port = Number(process.env.PORT);
 app.use(
