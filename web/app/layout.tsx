@@ -1,13 +1,8 @@
-import {
-  Geist,
-  Geist_Mono,
-  Noto_Sans,
-  Playfair_Display,
-} from "next/font/google"
+import { Geist_Mono, Noto_Sans, Playfair_Display } from "next/font/google"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
+import Providers from "@/components/providers"
 
 const playfairDisplayHeading = Playfair_Display({
   subsets: ["latin"],
@@ -39,7 +34,7 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
