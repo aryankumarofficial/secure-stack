@@ -102,12 +102,10 @@ const options: swaggerJSDoc.Options = {
     },
     security: [{ cookieAuth: [] }],
   },
-  apis: [
-    "./src/routes/*.ts",
-    "./src/controllers/*.ts",
-    "./src/validators/*.ts",
-    "./src/types/*.ts",
-  ],
+  apis:
+    process.env.NODE_ENV === "production"
+      ? ["./dist/**/*.js"]
+      : ["./src/**/*.ts"],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);

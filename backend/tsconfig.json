@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
 
     "rootDir": "./src",
     "outDir": "./dist",
@@ -19,6 +19,7 @@
 
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
+    "sourceMap": true,
   },
 
   "include": ["src"],

@@ -4,12 +4,14 @@ services:
       context: ./backend/.
       dockerfile: Dockerfile
 
-    image: ghcr.io/aryankumarofficial/secure-stack:latest
-    restart: unlest-stopped
+    # image: ghcr.io/aryankumarofficial/secure-stack:latest
+    restart: unless-stopped
     ports:
       - "5000:5000"
 
     env_file: ./backend/.env
+    environment:
+      NODE_ENV: production
   # web:
   #   build:
   #     context: ./web
