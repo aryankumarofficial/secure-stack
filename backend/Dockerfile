@@ -19,9 +19,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN bun run generate-swagger
-
 RUN bun run build
+
+RUN bun run generate-swagger
 
 FROM oven/bun:1.3-alpine AS runner
 WORKDIR /app
