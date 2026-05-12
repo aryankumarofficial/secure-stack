@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: ./backend/.
+      dockerfile: Dockerfile
+
+    image: ghcr.io/aryankumarofficial/secure-stack:latest
+    restart: unlest-stopped
+    ports:
+      - "5000:5000"
+
+    env_file: ./backend/.env
+  # web:
+  #   build:
+  #     context: ./web
+  #     dockerfile: Dockerfile
+  #   image: ghcr.io/<org>/myapp-web:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   env_file: ./web/.env
+  #   depends_on:
+  #     - backend

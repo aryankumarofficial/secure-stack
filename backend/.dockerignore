@@ -1,0 +1,16 @@
+# Secrets — most critical, must never enter build context
+.env
+.env.*
+!.env.example
+
+# Generated — rebuilt during docker build
+.generated
+node_modules
+dist
+
+# Dev/meta
+.git
+.gitignore
+README.md
+*.log
+coverage
