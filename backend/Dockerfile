@@ -1,4 +1,4 @@
-FROM oven/bun:1.1-alpine AS deps
+FROM oven/bun:1.3-alpine AS deps
 
 WORKDIR /app
 
@@ -10,14 +10,14 @@ COPY prisma ./prisma
 
 RUN bun install --frozen-lockfile
 
-FROM deps as builder
+FROM deps AS builder
 WORKDIR /app
 
 COPY . .
 
 RUN bun run build
 
-FROM oven/bun:1.1-alpine AS runner
+FROM oven/bun:1.3-alpine AS runner
 WORKDIR /app
 
 RUN apk add --no-cache openssl
