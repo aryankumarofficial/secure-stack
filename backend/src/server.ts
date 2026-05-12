@@ -1,11 +1,11 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./config/swagger.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import logger from "./middlewares/logger.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import rootRouter from "./routes/index.js";
+import swaggerDocument from "../swagger.json";
 const app = express();
 const port = Number(process.env.PORT);
 app.use(
@@ -34,7 +34,7 @@ app.use("/api", rootRouter);
 
 app.use(errorMiddleware);
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);
 });

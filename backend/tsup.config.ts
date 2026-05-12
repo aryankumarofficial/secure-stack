@@ -13,4 +13,7 @@ export default defineConfig({
   treeshake: false,
   minify: false,
   dts: false,
+  esbuildOptions(options) {
+    options.legalComments = "inline";
+  },
 });
