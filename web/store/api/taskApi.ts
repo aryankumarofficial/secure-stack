@@ -1,14 +1,15 @@
 import { baseApi } from "./baseApi"
+import type { Task, CreateTaskDto, UpdateTaskDto } from "@/types/task.type"
 
 export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTasks: builder.query({
+    getTasks: builder.query<Task[], void>({
       query: () => "/task",
 
       providesTags: ["Task"],
     }),
 
-    createTask: builder.mutation({
+    createTask: builder.mutation<Task, CreateTaskDto>({
       query: (body) => ({
         url: "/task",
         method: "POST",
@@ -18,7 +19,7 @@ export const taskApi = baseApi.injectEndpoints({
       invalidatesTags: ["Task"],
     }),
 
-    updateTask: builder.mutation({
+    updateTask: builder.mutation<Task, UpdateTaskDto>({
       query: ({ id, ...body }) => ({
         url: `/task/${id}`,
         method: "PATCH",
@@ -28,7 +29,7 @@ export const taskApi = baseApi.injectEndpoints({
       invalidatesTags: ["Task"],
     }),
 
-    deleteTask: builder.mutation({
+    deleteTask: builder.mutation<void, string>({
       query: (id) => ({
         url: `/task/${id}`,
         method: "DELETE",
