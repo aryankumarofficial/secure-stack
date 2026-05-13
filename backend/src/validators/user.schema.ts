@@ -10,8 +10,8 @@ export const userSchema = z.object({
     .refine((v) => /[A-Z]/.test(v), { error: "Must contain Upper case" })
     .refine((v) => /[a-z]/.test(v), { error: "Must contain lower case" })
     .refine((v) => /\d/.test(v), { error: "Must contain number" })
-    .refine((v) => /[!@#$%^&*]/.test(v), {
-      error: "Must contain specail characters",
+    .refine((v) => /[!@#$%^&*()_+=]/.test(v), {
+      error: "Must contain special characters",
     }),
 });
 
